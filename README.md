@@ -1,17 +1,17 @@
 <div align="center">
 
-╔══════════════════════════════════════════════════╗
-║ CLASIFICADOR DE MENSAJES TIPO SMS (SPAM) ║
-╠══════════════════════════════════════════════════╣
-║ MAestría en Inteligencia Artificial Aplicada║
-║ Universidad Icesi ║
-╠══════════════════════════════════════════════════╣
-║ Autores: ║
-║ - Andrés Rodriguez ║
-║ - Alberto Torres ║
-║ - David Osorio ║
-║ - Javier Yela ║
-╚══════════════════════════════════════════════════╝
+# **UNIVERSIDAD [Universidad Icesi]**  
+## **Facultad de Ingeniería y Ciencias Aplicadas**  
+### **MAestría en Inteligencia Artificial Aplicada**
+
+
+# **CLASIFICADOR DE MENSAJES TIPO SMS (SPAM)**
+
+## **Autores**
+**Andrés Rodriguez**  
+**Alberto Torres**
+**David Osorio**
+**Javier Yela**
 
 </div>
 
@@ -25,28 +25,34 @@ Este repositorio incluye:
 - Un notebook para análisis exploratorio de datos (EDA).
 - El dataset utilizado y los modelos ya entrenados.
 
----
 
 ## Estructura del repositorio
 
 Clasificador/
+│
 ├── data/
-│ └── data_spam.csv # Dataset original (spam/ham)
+│   └── data_spam.csv                 # Dataset original (ham/spam)
 │
 ├── models/
-│ ├── model.pkl # Modelo entrenado
-│ └── vectorizer.pkl # Vectorizador TF-IDF
+│   ├── model.pkl                     # Modelo entrenado (SVM balanceado)
+│   └── vectorizer.pkl                # Vectorizador TF-IDF
 │
 ├── src/
-│ ├── ClasificadorEmail.py # Lógica del clasificador
-│ ├── app.py # Aplicación Streamlit
-│ └── train_model.py # Script de entrenamiento
+│   ├── app.py                        # Aplicación Streamlit
+│   ├── ClasificadorEmail.py          # Lógica principal del clasificador
+│   └── train_svm.py                  # Script de entrenamiento del modelo
 │
-├── venv/ # Entorno virtual (opcional)
+├── images/                           # Evidencias de funcionamiento
+│   ├── img1.png
+│   ├── img2.png
+│   └── img3.png
 │
-├── EDA_spam.ipynb # Notebook del análisis exploratorio de datos
-└── README.md
----
+├── venv/                             # Entorno virtual (opcional, ignorado por git)
+│
+├── EDA_spam.ipynb                    # Notebook de análisis exploratorio
+├── requirements.txt                  # Dependencias del proyecto
+└── README.md                         # Documentación del proyecto
+
 
 ## Instalación
 
