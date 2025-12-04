@@ -1,4 +1,19 @@
-# Clasificador de mensajes tipo SMS en Spam y no spam
+<div align="center">
+
+╔══════════════════════════════════════════════════╗
+║ CLASIFICADOR DE MENSAJES TIPO SMS (SPAM) ║
+╠══════════════════════════════════════════════════╣
+║ MAestría en Inteligencia Artificial Aplicada║
+║ Universidad Icesi ║
+╠══════════════════════════════════════════════════╣
+║ Autores: ║
+║ - Andrés Rodriguez ║
+║ - Alberto Torres ║
+║ - David Osorio ║
+║ - Javier Yela ║
+╚══════════════════════════════════════════════════╝
+
+</div>
 
 Proyecto en Python para entrenar y desplegar un modelo de clasificación de correos electrónicos mediante Machine Learning y Streamlit.
 
