@@ -1,17 +1,12 @@
 <div align="center">
 
-# **UNIVERSIDAD [Universidad Icesi]**  
-## **Facultad de Ingeniería y Ciencias Aplicadas**  
-### **MAestría en Inteligencia Artificial Aplicada**
+#  Clasificador de Mensajes Tipo SMS (SPAM)
 
+###  Maestría en Inteligencia Artificial Aplicada  
+###  Universidad Icesi  
 
-# **CLASIFICADOR DE MENSAJES TIPO SMS (SPAM)**
-
-## **Autores**
-**Andrés Rodriguez**  
-**Alberto Torres**
-**David Osorio**
-**Javier Yela**
+**Autores**  
+Andrés Rodríguez • Alberto Torres • David Osorio • Javier Yela  
 
 </div>
 
@@ -27,7 +22,7 @@ Este repositorio incluye:
 
 
 ## Estructura del repositorio
-
+```
 Clasificador/
 │
 ├── data/
@@ -52,7 +47,7 @@ Clasificador/
 ├── EDA_spam.ipynb                    # Notebook de análisis exploratorio
 ├── requirements.txt                  # Dependencias del proyecto
 └── README.md                         # Documentación del proyecto
-
+```
 
 ## Instalación
 
