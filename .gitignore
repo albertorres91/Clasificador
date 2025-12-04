@@ -1,38 +1,64 @@
-# --- ENTORNO VIRTUAL ---
+# ======================================================
+#    .gitignore – Proyecto Clasificador de SPAM
+# ======================================================
+
+# -------------------------
+# ENTORNO VIRTUAL
+# -------------------------
 venv/
 env/
 .venv/
 
-# --- PYTHON CACHE ---
+# -------------------------
+# ARCHIVOS TEMPORALES
+# -------------------------
+*.tmp
+*.log
+*.out
+*.bak
+
+# -------------------------
+# PYTHON CACHE
+# -------------------------
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# --- MODELOS PESADOS ---
-models/*.pkl
-models/*.joblib
-models/*.bin
-!models/
-
-# --- DATASETS ---
-data/*.csv
-data/*.xlsx
-data/*.json
-!data/
-
-# --- NOTEBOOKS ---
+# -------------------------
+# JUPYTER NOTEBOOK CHECKPOINTS
+# -------------------------
 .ipynb_checkpoints/
 
-# --- TEMPORALES ---
+# -------------------------
+# STREAMLIT CACHE
+# -------------------------
+.streamlit/
+
+# -------------------------
+# CONFIGURACIONES LOCALES
+# -------------------------
+*.env
+.env.*
 .DS_Store
 Thumbs.db
 
-# --- LOGS ---
-*.log
+# -------------------------
+# CARPETAS QUE NO QUEREMOS SUBIR
+# -------------------------
+# (Elimina el comentario si quieres ignorarlas)
+#data/
+#models/
 
-# --- STREAMLIT ---
-.streamlit/
+# -------------------------
+# ARCHIVOS GRANDES O PESADOS (opcional)
+# (*.pkl y *.csv SE PERMITEN porque los necesitas en el repo)
+# -------------------------
+#*.pkl
+#*.csv
 
-# --- SECRETOS ---
-*.env
+# -------------------------
+# IDE
+# -------------------------
+.vscode/
+.idea/
