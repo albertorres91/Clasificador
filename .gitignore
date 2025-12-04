@@ -1,0 +1,38 @@
+# --- ENTORNO VIRTUAL ---
+venv/
+env/
+.venv/
+
+# --- PYTHON CACHE ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- MODELOS PESADOS ---
+models/*.pkl
+models/*.joblib
+models/*.bin
+!models/
+
+# --- DATASETS ---
+data/*.csv
+data/*.xlsx
+data/*.json
+!data/
+
+# --- NOTEBOOKS ---
+.ipynb_checkpoints/
+
+# --- TEMPORALES ---
+.DS_Store
+Thumbs.db
+
+# --- LOGS ---
+*.log
+
+# --- STREAMLIT ---
+.streamlit/
+
+# --- SECRETOS ---
+*.env

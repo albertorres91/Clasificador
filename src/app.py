@@ -1,17 +1,18 @@
 import streamlit as st
 from ClasificadorEmail import ClasificadorEmail
 
-# Cargar el modelo y el vectorizador
+# Configuración de página
+st.set_page_config(page_title="Clasificador de Correos", layout="wide")
 
-# Título de la aplicación
+# Título principal
 st.title("Clasificador de Correos Electrónicos")
 
-# Área de texto para ingresar el correo electrónico
-correo = st.text_area("Ingrese el correo electrónico:")
+# Input del usuario
+correo = st.text_area("Ingrese el correo electrónico:", height=200)
 
-boton = st.button("Clasificar")
+# Botón de acción
+if st.button("Clasificar"):
 
-if boton:
     if correo.strip() == "":
         st.warning("Por favor, ingrese un correo electrónico para clasificar.")
     else:
@@ -21,7 +22,14 @@ if boton:
         if resultado is None:
             st.error("Error en el proceso de clasificación. Por favor, verifique los modelos.")
         else:
-            if resultado == 0:
-                st.success(f"El correo NO es SPAM. Probabilidad: {probabilidad:.2f}")
+            # Si por alguna razón no hay probabilidad, la mostramos sin formato
+            if probabilidad is None:
+                if resultado == "spam":
+                    st.error("El correo SÍ es SPAM.")
+                else:
+                    st.success("El correo NO es SPAM.")
             else:
-                st.error(f"El correo SI es SPAM. Probabilidad: {probabilidad:.2f}")
+                if resultado == "spam":
+                    st.error(f"El correo SÍ es SPAM. Probabilidad: {probabilidad:.2f}")
+                else:
+                    st.success(f"El correo NO es SPAM. Probabilidad: {probabilidad:.2f}")

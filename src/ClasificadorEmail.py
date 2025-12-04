@@ -1,7 +1,6 @@
-import pandas as pd
 import os
+import re
 import joblib
-from deep_translator import GoogleTranslator
 
 
 class ClasificadorEmail:
@@ -10,63 +9,83 @@ class ClasificadorEmail:
         self.modelo = None
         self.vectorizer = None
 
+    # ---------------------------------------------------
+    # 1. Cargar modelo y vectorizador desde /models/
+    # ---------------------------------------------------
     def load_models(self):
-      # Obtener el directorio base del proyecto (un nivel arriba de src/)
-      base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-      
-      model_path = os.path.join(base_dir, 'models', 'model.pkl')
-      vectorizer_path = os.path.join(base_dir, 'models', 'vectorizer.pkl')
+        # Directorio base del proyecto (subir un nivel desde src/)
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-      if not os.path.exists(model_path) or not os.path.exists(vectorizer_path):
-        if not os.path.exists(model_path):
-            print(f"Error: Model file not found at {model_path}")
-        if not os.path.exists(vectorizer_path):
-            print(f"Error: Vectorizer file not found at {vectorizer_path}")
-        return None, None
+        model_path = os.path.join(base_dir, "models", "model.pkl")
+        vectorizer_path = os.path.join(base_dir, "models", "vectorizer.pkl")
 
-      try:
-        self.modelo = joblib.load(model_path)
-        self.vectorizer = joblib.load(vectorizer_path)    
-      except Exception as e:
-        print(f"Error loading models: {e}")
-        return None, None
-      
-      return self.modelo, self.vectorizer
+        print(f"Cargando modelo desde: {model_path}")
+        print(f"Cargando vectorizador desde: {vectorizer_path}")
 
+        if not os.path.exists(model_path) or not os.path.exists(vectorizer_path):
+            print("ERROR: No se encontraron archivos de modelo o vectorizador.")
+            return None, None
 
+        try:
+            self.modelo = joblib.load(model_path)
+            self.vectorizer = joblib.load(vectorizer_path)
+            print("Modelos cargados correctamente.")
+        except Exception as e:
+            print(f"ERROR cargando modelos: {e}")
+            return None, None
+
+        return self.modelo, self.vectorizer
+
+    # ---------------------------------------------------
+    # 2. Limpieza básica del texto
+    # ---------------------------------------------------
+    def limpiar(self, texto):
+        texto = str(texto).lower()
+        texto = re.sub(r"[^a-zA-Z0-9áéíóúñ ]", " ", texto)
+        return texto
+
+    # ---------------------------------------------------
+    # 3. Clasificar correo y devolver etiqueta + probabilidad
+    # ---------------------------------------------------
     def clasificar(self, email_texto):
-        # Implementar lógica de clasificación aquí
         model, vectorizer = self.load_models()
         if model is None or vectorizer is None:
-            print("Error en el proceso, modelos no encontrados.")
+            print("ERROR: Modelos no cargados.")
             return None, None
 
-        try:
-            translated_text = GoogleTranslator(source='auto', target='en').translate(email_texto)
-        except Exception as e:
-            print(f"Error en la traducción: {e}")
-            # Si falla la traducción, usar el texto original
-            translated_text = email_texto
+        texto_limpio = self.limpiar(email_texto)
 
         try:
-            input_tfidf = vectorizer.transform([translated_text])
-            prediction = model.predict(input_tfidf)[0]
-            proba = model.predict_proba(input_tfidf)[0]
-            
-            return prediction, proba[0]
+            # Vectorizar texto
+            X = vectorizer.transform([texto_limpio])
+
+            # Predicción: devuelve "ham" o "spam"
+            prediction = model.predict(X)[0]
+
+            prob_pred = None
+            if hasattr(model, "predict_proba"):
+                probas = model.predict_proba(X)[0]       # array de probs
+                clases = list(model.classes_)            # p.ej. ['ham', 'spam']
+
+                if prediction in clases:
+                    idx = clases.index(prediction)       # índice de la clase predicha
+                    prob_pred = float(probas[idx])       # probabilidad de ESA clase
+                else:
+                    # por seguridad, coger la prob máxima
+                    prob_pred = float(max(probas))
+
+            return prediction, prob_pred
+
         except Exception as e:
-            print(f"Error en la clasificación: {e}")
+            print(f"ERROR clasificando: {e}")
             return None, None
-    
 
 
-# Ejemplo de uso
+# ---------------------------------------------------
+# Prueba rápida desde consola
+# ---------------------------------------------------
 if __name__ == "__main__":
-    email_texto = "AI and Learning to Code I've a few questions recently about AI and the impact it has on learning to code."
-    clasificador = ClasificadorEmail(email_texto)
-    resultado,probabilidad = clasificador.clasificar(email_texto)
-
-    if resultado == 0:
-        print("El correo NO es SPAM.","Probabilidad:", probabilidad)
-    else:
-        print("El correo SI es SPAM.","Probabilidad:", probabilidad)
+    texto = "Congratulations! You have won a FREE prize!"
+    cls = ClasificadorEmail(texto)
+    r, p = cls.clasificar(texto)
+    print("Resultado:", r, "Probabilidad:", p)
